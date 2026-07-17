@@ -15,7 +15,7 @@ This file loads all Excel datasets into pandas DataFrames.
 import pandas as pd
 
 # Import project configuration
-from config import (
+from src.etl.config import (
     RAW_DATA_DIR,
     SUPPORTING_DATA_DIR,
     CORE_FILES,

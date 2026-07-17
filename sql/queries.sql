@@ -1037,3 +1037,317 @@ WHERE company_id NOT IN
 (
 SELECT id FROM companies
 );
+
+
+SELECT name
+FROM sqlite_master
+WHERE type='table'
+ORDER BY name;
+
+
+SELECT 'companies' AS table_name, COUNT(*) FROM companies
+UNION ALL
+SELECT 'profitandloss', COUNT(*) FROM profitandloss
+UNION ALL
+SELECT 'balancesheet', COUNT(*) FROM balancesheet
+UNION ALL
+SELECT 'cashflow', COUNT(*) FROM cashflow
+UNION ALL
+SELECT 'analysis', COUNT(*) FROM analysis
+UNION ALL
+SELECT 'documents', COUNT(*) FROM documents
+UNION ALL
+SELECT 'prosandcons', COUNT(*) FROM prosandcons
+UNION ALL
+SELECT 'financial_ratios', COUNT(*) FROM financial_ratios
+UNION ALL
+SELECT 'market_cap', COUNT(*) FROM market_cap
+UNION ALL
+SELECT 'stock_prices', COUNT(*) FROM stock_prices;
+
+SELECT company_id,
+       year,
+       COUNT(*)
+FROM profitandloss
+GROUP BY company_id, year
+HAVING COUNT(*) > 1;
+
+SELECT company_id,
+       year,
+       COUNT(*)
+FROM balancesheet
+GROUP BY company_id, year
+HAVING COUNT(*) > 1;
+
+SELECT company_id,
+       year,
+       COUNT(*)
+FROM cashflow
+GROUP BY company_id, year
+HAVING COUNT(*) > 1;
+
+SELECT company_id,
+       year,
+       COUNT(*)
+FROM analysis
+GROUP BY company_id, year
+HAVING COUNT(*) > 1;
+
+SELECT *
+FROM companies
+WHERE company_id IS NULL;
+
+
+SELECT *
+FROM profitandloss
+WHERE company_id='ASIANPAINT'
+AND year='Mar 2013';
+
+
+SELECT *
+FROM balancesheet
+WHERE company_id='ABB'
+AND year='Mar 2014';
+
+PRAGMA database_list;
+
+SELECT COUNT(*)
+FROM profitandloss
+WHERE company_id='ASIANPAINT'
+AND year='Mar 2013';
+
+
+SELECT rowid, *
+FROM profitandloss
+WHERE company_id='ASIANPAINT'
+AND year='Mar 2013';
+
+SELECT COUNT(*)
+FROM balancesheet
+WHERE company_id='ABB'
+AND year='Mar 2014';
+
+
+SELECT company_id,
+       year,
+       COUNT(*) AS duplicate_count
+FROM profitandloss
+GROUP BY company_id, year
+HAVING COUNT(*) > 1;
+
+SELECT company_id,
+       year,
+       COUNT(*) AS duplicate_count
+FROM balancesheet
+GROUP BY company_id, year
+HAVING COUNT(*) > 1;
+
+SELECT company_id,
+       year,
+       COUNT(*) AS duplicate_count
+FROM cashflow
+GROUP BY company_id, year
+HAVING COUNT(*) > 1;
+
+
+SELECT
+    id,
+    '[' || company_id || ']' AS company_id,
+    LENGTH(company_id) AS company_length,
+    '[' || year || ']' AS year,
+    LENGTH(year) AS year_length
+FROM profitandloss
+WHERE company_id LIKE 'ASIANPAINT%';
+
+SELECT
+    TRIM(company_id) AS company_id,
+    TRIM(year) AS year,
+    COUNT(*) AS duplicate_count
+FROM profitandloss
+GROUP BY TRIM(company_id), TRIM(year)
+HAVING COUNT(*) > 1;
+
+SELECT
+    id,
+    company_id,
+    year
+FROM profitandloss
+WHERE TRIM(company_id) = 'ASIANPAINT'
+AND TRIM(year) = 'Mar 2013';
+
+
+SELECT
+    company_id,
+    year,
+    COUNT(*) AS cnt
+FROM profitandloss
+GROUP BY company_id, year
+HAVING cnt > 1
+ORDER BY company_id, year;
+
+SELECT
+    COUNT(*) AS total_rows,
+    COUNT(DISTINCT company_id || '|' || year) AS unique_company_year
+FROM profitandloss;
+
+
+ALTER TABLE financial_ratios
+ADD COLUMN revenue_cagr_5yr REAL;
+
+ALTER TABLE financial_ratios
+ADD COLUMN pat_cagr_5yr REAL;
+
+ALTER TABLE financial_ratios
+ADD COLUMN eps_cagr_5yr REAL;
+
+ALTER TABLE financial_ratios
+ADD COLUMN composite_quality_score REAL;
+
+PRAGMA table_info(financial_ratios);
+
+SELECT COUNT(*)
+FROM financial_ratios;
+
+SELECT
+company_id,
+year,
+COUNT(*) AS total
+FROM financial_ratios
+GROUP BY company_id, year
+HAVING COUNT(*) > 1;
+
+SELECT
+company_id,
+year,
+net_profit_margin_pct,
+operating_profit_margin_pct,
+return_on_equity_pct,
+debt_to_equity,
+interest_coverage,
+asset_turnover,
+free_cash_flow_cr,
+capex_cr
+FROM financial_ratios
+LIMIT 10;
+
+
+PRAGMA table_info(financial_ratios);
+
+SELECT sql
+FROM sqlite_master
+WHERE name='financial_ratios';
+
+
+SELECT
+company_id,
+year,
+COUNT(*) AS total
+FROM profitandloss
+GROUP BY company_id, year
+HAVING COUNT(*) > 1;
+
+SELECT
+COUNT(*)
+FROM profitandloss;
+
+DELETE FROM financial_ratios;
+
+INSERT INTO financial_ratios (company_id, year)
+SELECT DISTINCT
+    company_id,
+    year
+FROM profitandloss;
+
+SELECT COUNT(*)
+FROM financial_ratios;
+
+SELECT
+company_id,
+year,
+COUNT(*)
+FROM financial_ratios
+GROUP BY company_id, year
+HAVING COUNT(*) > 1;
+
+DELETE FROM financial_ratios;
+
+INSERT INTO financial_ratios (company_id, year)
+SELECT
+    company_id,
+    year
+FROM profitandloss;
+
+SELECT COUNT(*)
+FROM financial_ratios;
+
+SELECT
+    company_id,
+    year,
+    COUNT(*) AS total
+FROM financial_ratios
+GROUP BY company_id, year
+HAVING COUNT(*) > 1;
+
+SELECT
+    company_id,
+    year,
+    net_profit_margin_pct,
+    return_on_equity_pct,
+    debt_to_equity,
+    free_cash_flow_cr
+FROM financial_ratios
+LIMIT 10;
+
+PRAGMA table_info(companies);
+
+SELECT *
+FROM companies
+LIMIT 1;
+
+
+SELECT COUNT(*)
+FROM financial_ratios;
+
+SELECT
+COUNT(net_profit_margin_pct) AS net_profit_margin,
+COUNT(operating_profit_margin_pct) AS opm,
+COUNT(return_on_equity_pct) AS roe,
+COUNT(debt_to_equity) AS debt_equity,
+COUNT(asset_turnover) AS asset_turnover,
+COUNT(free_cash_flow_cr) AS free_cash_flow
+FROM financial_ratios;
+
+SELECT
+company_id,
+year,
+COUNT(*)
+FROM financial_ratios
+GROUP BY company_id, year
+HAVING COUNT(*) > 1;
+
+SELECT
+company_id,
+year,
+return_on_equity_pct
+FROM financial_ratios
+ORDER BY return_on_equity_pct DESC
+LIMIT 10;
+
+SELECT
+company_id,
+year,
+debt_to_equity
+FROM financial_ratios
+ORDER BY debt_to_equity DESC
+LIMIT 10;
+
+SELECT
+company_id,
+year,
+return_on_equity_pct,
+debt_to_equity
+FROM financial_ratios
+WHERE
+return_on_equity_pct > 15
+AND debt_to_equity < 1
+ORDER BY return_on_equity_pct DESC;
