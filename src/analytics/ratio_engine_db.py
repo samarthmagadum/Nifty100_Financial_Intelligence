@@ -11,6 +11,10 @@ import pandas as pd
 from src.etl.loader import load_core_files
 from src.database.database_utils import get_connection
 
+from src.analytics.ratio_engine import (
+    calculate_company_cagr
+)
+
 from src.analytics.ratios import (
     calculate_net_profit_margin,
     calculate_operating_profit_margin,
@@ -28,6 +32,8 @@ from src.analytics.cashflow_kpis import (
 from src.analytics.cagr import (
     calculate_cagr
 )
+
+
 
 
 
@@ -117,6 +123,25 @@ def calculate_kpis(df):
     print("CALCULATING KPIs")
     print("=" * 60)
 
+    print("\nCalculating CAGR...")
+
+    # Calculate CAGR for each company
+    cagr_df = calculate_company_cagr(df)
+
+    # Merge CAGR values into every yearly record
+    df = df.merge(
+        cagr_df[
+            [
+                "company_id",
+                "revenue_cagr_5yr",
+                "pat_cagr_5yr",
+                "eps_cagr_5yr"
+            ]
+        ],
+        on="company_id",
+        how="left"
+    )
+
     results = []
 
     for _, row in df.iterrows():
@@ -164,6 +189,13 @@ def calculate_kpis(df):
             row["sales"]
         )
 
+        if row["equity_capital"] > 0:
+            book_value = (
+                row["equity_capital"] + row["reserves"]
+            ) / row["equity_capital"]
+        else:
+            book_value = None
+
         results.append({
 
             "company_id": row["company_id"],
@@ -179,16 +211,17 @@ def calculate_kpis(df):
             "capex_cr": capex_value,
 
             "earnings_per_share": row["eps"],
-            "book_value_per_share":
-                (
-                    row["equity_capital"] + row["reserves"]
-                ) / row["equity_capital"]
-                if row["equity_capital"] > 0
-                else None,
+            "book_value_per_share": book_value,
 
             "dividend_payout_ratio_pct": row["dividend_payout"],
             "total_debt_cr": row["borrowings"],
-            "cash_from_operations_cr": row["operating_activity"]
+            "cash_from_operations_cr": row["operating_activity"],
+
+            "revenue_cagr_5yr": row["revenue_cagr_5yr"],
+            "pat_cagr_5yr": row["pat_cagr_5yr"],
+            "eps_cagr_5yr": row["eps_cagr_5yr"],
+
+            "composite_quality_score": None
 
         })
 
@@ -198,7 +231,6 @@ def calculate_kpis(df):
     print(result.head())
 
     return result
-
 
 def update_financial_ratios(df):
 
@@ -230,7 +262,11 @@ def update_financial_ratios(df):
             book_value_per_share=?,
             dividend_payout_ratio_pct=?,
             total_debt_cr=?,
-            cash_from_operations_cr=?
+            cash_from_operations_cr=?,
+            revenue_cagr_5yr=?,
+            pat_cagr_5yr=?,
+            eps_cagr_5yr=?,
+            composite_quality_score=?
 
         WHERE
             company_id=?
@@ -252,6 +288,10 @@ def update_financial_ratios(df):
             row["dividend_payout_ratio_pct"],
             row["total_debt_cr"],
             row["cash_from_operations_cr"],
+            row["revenue_cagr_5yr"],
+            row["pat_cagr_5yr"],
+            row["eps_cagr_5yr"],
+            row["composite_quality_score"],
 
             row["company_id"],
             row["year"]

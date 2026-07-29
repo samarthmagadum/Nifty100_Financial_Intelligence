@@ -1351,3 +1351,203 @@ WHERE
 return_on_equity_pct > 15
 AND debt_to_equity < 1
 ORDER BY return_on_equity_pct DESC;
+
+
+
+SELECT
+COUNT(*) AS total_rows,
+COUNT(revenue_cagr_5yr) AS revenue_cagr_not_null,
+COUNT(pat_cagr_5yr) AS pat_cagr_not_null
+FROM financial_ratios;
+
+SELECT
+company_id,
+year,
+revenue_cagr_5yr,
+pat_cagr_5yr
+FROM financial_ratios
+LIMIT 20;
+
+SELECT
+COUNT(revenue_cagr_5yr),
+COUNT(pat_cagr_5yr),
+COUNT(eps_cagr_5yr)
+FROM financial_ratios;
+
+
+SELECT
+COUNT(revenue_cagr_5yr) AS revenue,
+COUNT(pat_cagr_5yr) AS pat,
+COUNT(eps_cagr_5yr) AS eps
+FROM financial_ratios;
+
+SELECT
+company_id,
+year,
+revenue_cagr_5yr,
+pat_cagr_5yr,
+eps_cagr_5yr
+FROM financial_ratios
+WHERE revenue_cagr_5yr IS NOT NULL
+LIMIT 10;
+
+SELECT
+company_id,
+year,
+revenue_cagr_5yr,
+pat_cagr_5yr,
+eps_cagr_5yr
+FROM financial_ratios
+WHERE company_id='ABB';
+
+SELECT name
+FROM sqlite_master
+WHERE type='table';
+
+
+
+PRAGMA table_info(companies);
+
+PRAGMA table_info(market_cap);
+
+SELECT * FROM companies LIMIT 5;
+
+SELECT * FROM market_cap LIMIT 5;
+
+SELECT COUNT(*) FROM sectors;
+SELECT * FROM sectors LIMIT 5;
+SELECT
+    company_id,
+    broad_sector
+FROM sectors
+
+PRAGMA table_info(financial_ratios);
+
+SELECT *
+FROM financial_ratios
+LIMIT 1;
+
+SELECT name
+FROM sqlite_master
+WHERE type='table';
+
+SELECT *
+FROM peer_groups;
+
+SELECT *
+FROM peer_groups
+LIMIT 10;
+
+PRAGMA table_info(companies);
+
+PRAGMA table_info(peer_groups);
+
+SELECT COUNT(*)
+FROM peer_percentiles;
+
+SELECT name
+FROM sqlite_master
+WHERE type='table';
+
+SELECT *
+FROM analysis
+LIMIT 5;
+
+SELECT name
+FROM sqlite_master
+WHERE type='table';
+
+PRAGMA table_info(market_cap);
+
+
+SELECT DISTINCT year
+FROM financial_ratios
+ORDER BY year;
+
+SELECT DISTINCT year
+FROM market_cap
+ORDER BY year;
+
+SELECT company_id, year, pe_ratio
+FROM market_cap
+LIMIT 10;
+
+
+SELECT
+COUNT(*) AS TotalRows,
+COUNT(composite_quality_score) AS ScoreAvailable
+FROM financial_ratios
+WHERE year='Mar 2024';
+
+SELECT
+company_id,
+year,
+composite_quality_score
+FROM financial_ratios
+WHERE year='Mar 2024'
+LIMIT 10;
+
+SELECT
+    year,
+    COUNT(composite_quality_score) AS ScoreCount
+FROM financial_ratios
+GROUP BY year
+ORDER BY year;
+
+PRAGMA table_info(documents);
+
+PRAGMA table_info(companies);
+PRAGMA table_info(documents);
+PRAGMA table_info(sectors);
+
+PRAGMA table_info(financial_ratios);
+
+SELECT
+    year,
+    return_on_equity_pct,
+    net_profit_margin_pct,
+    debt_to_equity,
+    revenue_cagr_5yr,
+    free_cash_flow_cr
+FROM financial_ratios
+WHERE company_id = 'ABB';
+
+PRAGMA table_info(profitandloss);
+SELECT *
+FROM profitandloss
+WHERE company_id='ABB'
+LIMIT 5;
+
+SELECT
+    id,
+    company_name,
+    roce_percentage,
+    roe_percentage
+FROM companies
+WHERE id='ABB';
+
+PRAGMA table_info(prosandcons);
+SELECT *
+FROM prosandcons
+WHERE company_id='ABB';
+
+SELECT COUNT(*)
+FROM prosandcons;
+SELECT *
+FROM prosandcons
+LIMIT 10;
+
+SELECT name FROM sqlite_master WHERE type='table';
+
+PRAGMA table_info(financial_ratios);
+PRAGMA table_info(peer_percentiles);
+
+PRAGMA table_info(companies);
+
+PRAGMA table_info(sectors);
+
+PRAGMA table_info(market_cap);
+
+PRAGMA table_info(analysis);
+
+PRAGMA table_info(documents);

@@ -15,7 +15,7 @@ import pandas as pd
 from pathlib import Path
 
 # Import Loader Functions
-from loader import (
+from src.etl.loader import (
     load_core_files,
     load_supporting_files
 )

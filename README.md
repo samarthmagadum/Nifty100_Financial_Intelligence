@@ -1,34 +1,43 @@
 # Nifty100 Financial Intelligence Platform
 
-## Sprint 1 – Data Foundation
 
-### Project Overview
+## Project Overview
 
-This project builds a Financial Intelligence Platform for Nifty 100 companies using Python, SQLite, SQL, and Power BI.
+The **Nifty100 Financial Intelligence Platform** is a financial analytics dashboard developed for analyzing Nifty 100 companies using Python, SQLite, SQL, Pandas, Plotly, and Streamlit.
 
-Sprint 1 focused on:
+The platform provides:
 
-- Loading Excel datasets
-- Data validation
-- SQLite database creation
-- SQL query development
-- Data Quality validation
+- Company financial analysis
+- Peer comparison
+- Stock screening
+- Sector intelligence
+- Trend analysis
+- Valuation analysis
+- Capital allocation insights
+- Annual report tracking
+
 
 ---
 
-## Technologies
+# Technologies Used
 
 - Python
 - Pandas
+- NumPy
 - SQLite
 - SQL
-- VS Code
+- Streamlit
+- Plotly
+- Excel
+- Git
+
 
 ---
 
-## Datasets
+# Project Dataset
 
-Core datasets:
+
+## Core Datasets
 
 - companies
 - profitandloss
@@ -38,7 +47,8 @@ Core datasets:
 - documents
 - prosandcons
 
-Supporting datasets:
+
+## Supporting Datasets
 
 - financial_ratios
 - market_cap
@@ -46,12 +56,31 @@ Supporting datasets:
 - sectors
 - stock_prices
 
+
 ---
+
+# Sprint 1 – Data Foundation ✅
+
+
+Sprint 1 focused on creating the data foundation for the platform.
+
+
+Completed:
+
+- Excel dataset ingestion
+- Data cleaning
+- Data normalization
+- SQLite database creation
+- Schema validation
+- Data Quality checks
+- SQL validation queries
+
 
 ## Validation Summary
 
+
 | Rule | Status |
-|------|--------|
+|---|---|
 | DQ-01 | Passed |
 | DQ-02 | Passed |
 | DQ-03 | Passed |
@@ -63,18 +92,77 @@ Supporting datasets:
 | DQ-09 | Passed |
 | DQ-10 | Warning |
 
+
+## Validation Result
+
+
+Initial Validation Issues: 699
+
+
+Final Validation Issues: 105
+
+
+Resolved Issues: 594
+
+
+
 ---
 
-## Result
+# Sprint 2 – Analytics Development ✅
 
-Initial Validation Issues : 699
 
-Final Validation Issues : 105
+Completed analytics modules:
 
-Resolved Issues : 594
+
+- Financial ratio calculation
+- Composite quality scoring
+- Peer group analysis
+- Percentile ranking
+- Radar chart analytics
+- Peer comparison calculations
+
 
 ---
 
-## Author
+# Sprint 3 – Intelligence Modules ✅
 
-Samarth Magadum
+
+Completed modules:
+
+
+- Company Profile
+- Stock Screener
+- Trend Analysis
+- Sector Analysis
+- Capital Allocation Analysis
+- Annual Reports Module
+
+
+---
+
+# Sprint 4 – Dashboard Integration ✅
+
+
+Completed:
+
+
+- Streamlit dashboard
+- Valuation module
+- Dashboard testing
+- Bug fixes
+- Performance improvements
+- Documentation
+
+
+---
+
+# Dashboard Run Instructions
+
+
+## 1. Clone Repository
+
+
+```bash
+git clone <repository-url>
+
+
