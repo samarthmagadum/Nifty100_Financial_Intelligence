@@ -1551,3 +1551,11 @@ PRAGMA table_info(market_cap);
 PRAGMA table_info(analysis);
 
 PRAGMA table_info(documents);
+
+
+SELECT COUNT(*) AS total_companies
+FROM companies;
+
+SELECT id, company_name
+FROM companies
+ORDER BY id;
